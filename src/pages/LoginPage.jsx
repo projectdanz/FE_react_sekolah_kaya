@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ThemeToggle from "../components/ThemeToggle";
 import LoginForm from "../components/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [mode, setMode] = useState("login");
@@ -8,6 +9,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
@@ -15,6 +17,8 @@ const LoginPage = () => {
 
   const handleSubmit = () => {
     console.log("Login submitted:", { email, password });
+
+    navigate("/dashboard");
   };
 
   const goToOtp = () => {
