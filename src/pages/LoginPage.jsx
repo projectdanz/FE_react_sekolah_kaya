@@ -17,34 +17,31 @@ const LoginPage = () => {
 
   const handleSubmit = () => {
     console.log("Login submitted:", { email, password });
-
     navigate("/dashboard");
   };
 
   const goToOtp = () => {
-    // validasi password dan confirmPassword
     if (password !== confirmPassword) {
       alert("Password tidak sama!");
       return;
     }
-    // redirect ke halaman OTP
     navigate("/otp");
   };
 
   return (
     <div className={isDarkMode ? "dark" : ""}>
       <div
-        className={`grid min-h-screen relative ${
+        className={`grid min-h-screen relative lg:grid-cols-2 transition-colors ${
           isDarkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-700"
-        } lg:grid-cols-2 transition-colors`}
+        }`}
       >
         <ThemeToggle isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
 
         {/* Left Section */}
         <div
-          className={`flex flex-col gap-4 p-6 md:p-10 ${
-            isDarkMode ? "bg-gray-800" : "bg-white"
-          } transition-colors`}
+          className={`flex flex-col gap-4 p-6 md:p-10 transition-colors ${
+            isDarkMode ? "bg-gray-900" : "bg-white"
+          }`}
         >
           <div className="flex flex-1 items-center justify-center">
             <LoginForm
@@ -58,6 +55,7 @@ const LoginPage = () => {
               mode={mode}
               setMode={setMode}
               goToOtp={goToOtp}
+              isDarkMode={isDarkMode} // PASS PROP INI
             />
           </div>
         </div>

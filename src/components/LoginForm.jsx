@@ -11,6 +11,7 @@ const LoginForm = ({
   mode = "login",
   setMode,
   goToOtp,
+  isDarkMode, // TAMBAHKAN PROP INI
 }) => {
   return (
     <div className="w-full max-w-80 flex flex-col gap-6">
@@ -18,7 +19,7 @@ const LoginForm = ({
         <h1 className="text-2xl font-bold">
           {mode === "login" ? "Login to your account" : "Register your account"}
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 text-sm">
+        <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
           {mode === "login"
             ? "Enter your email below to login to your account"
             : "Enter your email below to create your account"}
@@ -29,7 +30,7 @@ const LoginForm = ({
         <div className="grid gap-3">
           <label
             htmlFor="email"
-            className="text-sm font-medium text-gray-700 dark:text-gray-200"
+            className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}
           >
             Email
           </label>
@@ -39,7 +40,11 @@ const LoginForm = ({
             placeholder="email@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-2 py-2 text-base bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:focus:border-blue-500 dark:focus:ring-blue-500/30 transition-all"
+            className={`rounded-md px-2 py-2 text-base transition-all focus:outline-none focus:ring-2 ${
+              isDarkMode 
+                ? 'border border-gray-600 bg-gray-800 text-gray-100 focus:border-blue-500 focus:ring-blue-500/30' 
+                : 'border border-gray-300 bg-white text-gray-700 focus:border-blue-600 focus:ring-blue-600/20'
+            }`}
             required
           />
         </div>
@@ -48,7 +53,7 @@ const LoginForm = ({
           <div className="flex items-center">
             <label
               htmlFor="password"
-              className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}
             >
               Password
             </label>
@@ -59,13 +64,19 @@ const LoginForm = ({
             placeholder="********"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 dark:border-gray-600 rounded-md px-2 py-2 text-base bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:focus:border-blue-500 dark:focus:ring-blue-500/30 transition-all"
+            className={`rounded-md px-2 py-2 text-base transition-all focus:outline-none focus:ring-2 ${
+              isDarkMode 
+                ? 'border border-gray-600 bg-gray-800 text-gray-100 focus:border-blue-500 focus:ring-blue-500/30' 
+                : 'border border-gray-300 bg-white text-gray-700 focus:border-blue-600 focus:ring-blue-600/20'
+            }`}
             required
           />
           {mode === "login" && (
             <a
               href="#forgot"
-              className="ml-auto text-sm no-underline hover:underline underline-offset-4 text-blue-600 dark:text-blue-500"
+              className={`ml-auto text-sm no-underline hover:underline underline-offset-4 ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-600'
+              }`}
             >
               Forgot your password?
             </a>
@@ -76,7 +87,7 @@ const LoginForm = ({
           <div className="grid gap-3">
             <label
               htmlFor="confirmPassword"
-              className="text-sm font-medium text-gray-700 dark:text-gray-200"
+              className={`text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}
             >
               Confirm Password
             </label>
@@ -86,7 +97,11 @@ const LoginForm = ({
               placeholder="********"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="border border-gray-300 dark:border-gray-600 rounded-md px-2 py-2 text-base bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-100 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 dark:focus:border-blue-500 dark:focus:ring-blue-500/30 transition-all"
+              className={`rounded-md px-2 py-2 text-base transition-all focus:outline-none focus:ring-2 ${
+                isDarkMode 
+                  ? 'border border-gray-600 bg-gray-800 text-gray-100 focus:border-blue-500 focus:ring-blue-500/30' 
+                  : 'border border-gray-300 bg-white text-gray-700 focus:border-blue-600 focus:ring-blue-600/20'
+              }`}
               required
             />
           </div>
@@ -101,7 +116,11 @@ const LoginForm = ({
               onSubmit();
             }
           }}
-          className="w-full bg-blue-600 dark:bg-blue-500 text-white rounded-md py-2 border-none text-base cursor-pointer hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+          className={`w-full rounded-md py-2 border-none text-base cursor-pointer transition-colors ${
+            isDarkMode
+              ? 'bg-blue-500 text-white hover:bg-blue-600'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
         >
           {mode === "login" ? "Login" : "Register"}
         </button>
@@ -113,7 +132,9 @@ const LoginForm = ({
             Don't have an account?{" "}
             <button
               type="button"
-              className="underline underline-offset-4 text-blue-600 dark:text-blue-500"
+              className={`underline underline-offset-4 bg-transparent border-none cursor-pointer ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-600'
+              }`}
               onClick={() => setMode("register")}
             >
               Sign up
@@ -124,7 +145,9 @@ const LoginForm = ({
             Already have an account?{" "}
             <button
               type="button"
-              className="underline underline-offset-4 text-blue-600 dark:text-blue-500"
+              className={`underline underline-offset-4 bg-transparent border-none cursor-pointer ${
+                isDarkMode ? 'text-blue-400' : 'text-blue-600'
+              }`}
               onClick={() => setMode("login")}
             >
               Login
