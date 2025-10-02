@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import "./index.css";
+import OTPVerification from "./pages/otpPage";
 // import Dashboard from "./pages/Dashboard";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -10,6 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/verifiy-otp" element={<OTPVerification />} />
         {/* <Route path="/dashboard" element={<Dashboard />} /> */}
       </Routes>
     </BrowserRouter>

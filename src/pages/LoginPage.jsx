@@ -25,7 +25,7 @@ const LoginPage = () => {
       alert("Password tidak sama!");
       return;
     }
-    navigate("/otp");
+    navigate("/verifiy-otp");
   };
 
   return (
