@@ -17,8 +17,8 @@ const ThemeToggle = ({ isDarkMode, onToggle }) => {
         <span className={`absolute top-[3px] left-[3px] w-6 h-6 bg-white rounded-full transition-transform ${
           isDarkMode ? 'translate-x-[30px]' : ''
         }`}></span>
-        <span className="text-sm px-0.5">☀️</span>
-        <span className="text-sm px-0.5">🌙</span>
+        <span className="text-sm px-0.5"></span>
+        <span className="text-sm px-0.5"></span>
       </label>
     </div>
   );
