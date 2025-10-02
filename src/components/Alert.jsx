@@ -1,5 +1,5 @@
-import React from "react";
-import { X } from "react-feather";
+import React from 'react';
+import { X } from 'react-feather';
 
 const Alert = ({ onClose }) => {
   return (
@@ -7,8 +7,7 @@ const Alert = ({ onClose }) => {
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <p className="text-yellow-700">
-            <span className="font-bold">Welcome back!</span> Continue your
-            learning journey.
+            <span className="font-bold">Welcome back!</span> Continue your learning journey.
           </p>
         </div>
         <button
