@@ -118,7 +118,7 @@ const Dashboard = () => {
                 )}
               </button>
               <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow">
-                <span className="text-blue-900 font-bold">U</span>
+                {/* <span className="text-blue-900 font-bold">U</span> */}
               </div>
             </div>
           </div>
