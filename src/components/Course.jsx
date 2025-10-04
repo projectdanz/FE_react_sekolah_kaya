@@ -1,34 +1,56 @@
 import React from "react";
 import { Play, Book, Clock } from "react-feather";
+import { useNavigate } from "react-router-dom";
 
 const Course = ({ darkMode }) => {
+  const navigate = useNavigate();
+
   const courseModules = [
     {
+      id: 1,
       title: "Introduction to MERN Stack",
       duration: "2h 30m",
       lessons: 12,
+      progress: 100,
       completed: true,
+      link: "mern-intro",
+      image:
+        "https://images.unsplash.com/photo-1581093588401-ecfbc6f0f4b4?w=400&h=300&fit=crop",
     },
     {
+      id: 2,
       title: "MongoDB Basics",
       duration: "3h 15m",
       lessons: 8,
+      progress: 50,
       completed: false,
+      link: "mongodb-basics",
+      image:
+        "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
     },
     {
+      id: 3,
       title: "Express.js Fundamentals",
       duration: "4h 45m",
       lessons: 15,
+      progress: 20,
       completed: false,
+      link: "express-fundamentals",
+      image:
+        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=300&fit=crop",
     },
   ];
+  console.log(courseModules[1].link);
+  const handleCourseClick = () => {
+    navigate(`/courses/${courseModules.link}`);
+  }
 
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${darkMode ? "dark" : ""}`}>
       <div
-        className={`p-6 rounded-xl ${
+        className={`p-6 rounded-xl shadow-sm ${
           darkMode ? "bg-gray-800" : "bg-white"
-        } shadow-sm`}
+        }`}
       >
         <div className="flex items-center justify-between mb-6">
           <h2
@@ -43,65 +65,137 @@ const Course = ({ darkMode }) => {
           </button>
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courseModules.map((module, index) => (
+            <button 
+              key={module.id}
+              link={module.link}
+              onClick={() => navigate(`/courses/${module.link}`)}
+            >
             <div
               key={index}
-              className={`p-4 rounded-lg ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-600"
-                  : "bg-gray-50 hover:bg-gray-100"
-              } transition-colors cursor-pointer`}
+              className={`rounded-xl shadow-lg overflow-hidden transition-all duration-300 
+                hover:shadow-xl hover:-translate-y-1 cursor-pointer 
+                ${darkMode ? "bg-gray-700" : "bg-white"}`}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4">
+              {/* Card Header */}
+              <div className="relative">
+                {/* Image Container */}
+                <div className="w-full h-48 overflow-hidden">
+                  <img
+                    src={module.image || "https://via.placeholder.com/400x300"}
+                    alt={module.title}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  />
+                </div>
+
+                {/* Badge Overlay */}
+                <div className="absolute top-4 right-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm ${
+                      module.completed
+                        ? "bg-green-500 bg-opacity-90 text-white"
+                        : "bg-blue-500 bg-opacity-90 text-white"
+                    }`}
+                  >
+                    {module.completed ? "Completed" : "In Progress"}
+                  </span>
+                </div>
+
+                {/* Icon Overlay */}
+                <div className="absolute bottom-4 left-4">
                   <div
-                    className={`p-2 rounded-lg ${
-                      module.completed ? "bg-green-100" : "bg-blue-100"
+                    className={`p-3 rounded-lg backdrop-blur-sm ${
+                      darkMode
+                        ? "bg-gray-800 bg-opacity-20"
+                        : "bg-gray-300 bg-opacity-20"
                     }`}
                   >
                     {module.completed ? (
-                      <Book size={20} className="text-green-600" />
+                      <Book size={24} className={`${darkMode ? "text-gray-300" : "text-gray-800"}`} />
                     ) : (
-                      <Play size={20} className="text-blue-600" />
+                      <Play size={24} className={`${darkMode ? "text-gray-300" : "text-gray-800"}`} />
                     )}
                   </div>
-                  <div>
-                    <h3
-                      className={`font-medium ${
-                        darkMode ? "text-gray-200" : "text-gray-700"
-                      }`}
-                    >
-                      {module.title}
-                    </h3>
-                    <div className="flex items-center space-x-4 mt-1">
-                      <span
-                        className={`flex items-center text-sm ${
-                          darkMode ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
-                        <Clock size={14} className="mr-1" />
-                        {module.duration}
-                      </span>
-                      <span
-                        className={`text-sm ${
-                          darkMode ? "text-gray-400" : "text-gray-500"
-                        }`}
-                      >
-                        {module.lessons} lessons
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className={`text-sm font-medium ${
-                    module.completed ? "text-green-600" : "text-blue-600"
-                  }`}
-                >
-                  {module.completed ? "Completed" : "In Progress"}
                 </div>
               </div>
+
+              {/* Card Body */}
+              <div className="p-6">
+                <h3
+                  className={`text-lg font-semibold mb-3 ${
+                    darkMode ? "text-gray-100" : "text-gray-800"
+                  }`}
+                >
+                  {module.title}
+                </h3>
+
+                <div className="space-y-2">
+                  <div
+                    className={`flex items-center text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    <Clock size={16} className="mr-2" />
+                    <span>{module.duration}</span>
+                  </div>
+                  <div
+                    className={`flex items-center text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    <Book size={16} className="mr-2" />
+                    <span>{module.lessons} lessons</span>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                {module.progress !== undefined && (
+                  <div
+                    className={`mt-4 pt-4 border-t ${
+                      darkMode ? "border-gray-600" : "border-gray-200"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between text-sm">
+                      {module.progress < 100 ? (
+                        <span
+                          className={`font-medium ${
+                            darkMode ? "text-blue-400" : "text-blue-600"
+                          }`}
+                        >
+                          {module.progress}% Complete
+                        </span>
+                      ) : (
+                        <span
+                          className={`font-medium ${
+                            darkMode ? "text-green-400" : "text-green-600"
+                          }`}
+                        >
+                          Completed
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Progress bar visual */}
+                    <div
+                      className={`w-full rounded-full h-2 mt-2 ${
+                        darkMode ? "bg-gray-600" : "bg-gray-300"
+                      }`}
+                    >
+                      <div
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          module.progress === 100
+                            ? "bg-green-500"
+                            : "bg-blue-500"
+                        }`}
+                        style={{ width: `${module.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
+            </button>
           ))}
         </div>
       </div>
