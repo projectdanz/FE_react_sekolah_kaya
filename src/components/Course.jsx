@@ -24,8 +24,8 @@ const Course = () => {
       title: "MongoDB Basics",
       duration: "3h 15m",
       lessons: 8,
-      progress: 50,
-      completed: false,
+      progress: 100,
+      completed: true,
       link: "mongodb-basics",
       image:
         "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop",
@@ -43,8 +43,18 @@ const Course = () => {
     },
   ];
   console.log(courseModules[1].link);
-  const handleCourseClick = () => {
-    navigate(`/courses/${courseModules.link}`);
+  const getLastOpenedCourse = () => {
+    const lastOpened = localStorage.getItem("lastOpenedCourse");
+    if (lastOpened) {
+      const found = courseModules.find((module) => module.link === lastOpened);
+      return found || courseModules[0];
+    }
+    return courseModules[0];
+  };
+
+  const handleCourseClick = (link) => {
+    localStorage.setItem("lastOpenedCourse", link);
+    navigate(`/courses/${module.link}`);
   };
 
   return (
@@ -62,7 +72,13 @@ const Course = () => {
           >
             Course Modules
           </h2>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            onClick={() => {
+              const lastCourse = getLastOpenedCourse();
+              navigate(`/courses/${lastCourse.link}`);
+            }}
+          >
             Continue Learning
           </button>
         </div>
@@ -71,8 +87,11 @@ const Course = () => {
           {courseModules.map((module, index) => (
             <button
               key={module.id}
-              link={module.link}
-              onClick={() => navigate(`/courses/${module.link}`)}
+              onClick={() => {
+                navigate(`/courses/${module.link}`);
+                localStorage.setItem("lastOpenedCourse", module.link);
+              }}
+              className="your-class-here"
             >
               <div
                 key={index}
