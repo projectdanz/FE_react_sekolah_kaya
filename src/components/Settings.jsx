@@ -1,7 +1,10 @@
 import React from "react";
 import { User, Bell, Lock, Globe } from "react-feather";
+import useTheme from "../hooks/useTheme";
 
-const Settings = ({ darkMode }) => {
+const Settings = () => {
+  const { darkMode } = useTheme();
+
   const sections = [
     {
       title: "Profile Settings",

@@ -1,5 +1,6 @@
 import React from "react";
 import { Book, Home, Video, Settings, LogOut, Menu, X } from "react-feather";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = ({
   isOpen,
@@ -8,13 +9,14 @@ const Sidebar = ({
   setActiveMenu,
   darkMode,
 }) => {
+  const navigate = useNavigate();
   const menuItems = [
     { id: "home", label: "Home", icon: Home },
     { id: "course", label: "Course", icon: Book },
     { id: "video", label: "Video", icon: Video },
     { id: "settings", label: "Settings", icon: Settings },
   ];
-
+  
   return (
     <>
       {/* Mobile Toggle Button */}
@@ -63,6 +65,9 @@ const Sidebar = ({
               className={`text-2xl font-bold ${
                 darkMode ? "text-white" : "text-blue-900"
               }`}
+              onClick={() => {
+                navigate('/dashboard')
+              }}
             >
               Sekolah Kaya
             </h2>

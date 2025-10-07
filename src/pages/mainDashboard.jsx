@@ -5,11 +5,12 @@ import Alert from "../components/Alert";
 import Home from "../components/Home";
 import Course from "../components/Course";
 import Settings from "../components/Settings";
+import useTheme from "../hooks/useTheme";
 
 const Dashboard = () => {
+  const { darkMode, toggleTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState("course");
-  const [darkMode, setDarkMode] = useState(false);
   const [showAlert, setShowAlert] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -106,7 +107,7 @@ const Dashboard = () => {
 
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => setDarkMode(!darkMode)}
+                onClick={toggleTheme}
                 className={`p-2 rounded-lg transition-colors ${
                   darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
                 }`}
