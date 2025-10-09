@@ -1,33 +1,32 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import SidebarCourse from "../components/SidebarCourse";
-import useTheme from "../hooks/useTheme";
 
 const DetailCourse = () => {
-  const { darkMode, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [activeVideo, setActiveVideo] = useState(1);
+  const { slug } = useParams();
 
   return (
-    <div
-      className={`min-h-screen ${
-        darkMode ? "dark bg-gray-900" : "bg-gray-100"
-      }`}
-    >
-      <SidebarCourse
-        isOpen={isOpen}
-        toggleSidebar={() => setIsOpen(!isOpen)}
-        activeVideo={activeVideo}
-        setActiveVideo={setActiveVideo}
-        darkMode={darkMode}
-        toggleTheme={toggleTheme}
-      />
-      {/* Video content section */}
+    <div className={darkMode ? "dark" : ""}>
       <div
-        className={`p-6 ${
-          darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-900"
-        }`}
+        className={`min-h-screen ${darkMode ? "bg-gray-900" : "bg-gray-50"}`}
       >
-        {/* Add your video player and content here */}
+        <SidebarCourse
+          isOpen={isOpen}
+          toggleSidebar={() => setIsOpen(!isOpen)}
+          activeVideo={activeVideo}
+          setActiveVideo={setActiveVideo}
+          darkMode={darkMode}
+          toggleTheme={toggleTheme}
+        />
+        <main
+          className={`ml-0 lg:ml-72 min-h-screen ${
+            darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+          }`}
+        >
+          {/* Add your course content here */}
+        </main>
       </div>
     </div>
   );

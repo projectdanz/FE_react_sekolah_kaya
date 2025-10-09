@@ -1,12 +1,13 @@
 import React from "react";
-import { Play, Book, Clock } from "react-feather";
 import { useNavigate } from "react-router-dom";
-import useTheme from "../hooks/useTheme";
+import { Play ,Clock, Book } from "react-feather";
+import { useTheme } from "../context/ThemeContext";
+import { themeConfig } from "../config/theme";
 
 const Course = () => {
   const navigate = useNavigate();
-  const { darkMode } = useTheme();
-
+  const { darkMode, toggleTheme } = useTheme();
+  const theme = darkMode ? themeConfig.dark : themeConfig.light;
   const courseModules = [
     {
       id: 1,
@@ -52,13 +53,8 @@ const Course = () => {
     return courseModules[0];
   };
 
-  const handleCourseClick = (link) => {
-    localStorage.setItem("lastOpenedCourse", link);
-    navigate(`/courses/${module.link}`);
-  };
-
   return (
-    <div className="space-y-6">
+    <div className={`space-y-6 ${darkMode ? "dark" : ""}`}>
       <div
         className={`p-6 rounded-xl shadow-sm ${
           darkMode ? "bg-gray-800" : "bg-white"
@@ -85,150 +81,140 @@ const Course = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courseModules.map((module, index) => (
-            <button
+            <div
               key={module.id}
-              onClick={() => {
-                navigate(`/courses/${module.link}`);
-                localStorage.setItem("lastOpenedCourse", module.link);
-              }}
-              className="your-class-here"
+              onClick={() => navigate(`/courses/${module.link}`)}
+              className={`rounded-xl overflow-hidden shadow-sm hover:shadow-lg 
+            transition-all duration-300 cursor-pointer
+            ${darkMode ? "bg-gray-800" : "bg-white"}`}
             >
-              <div
-                key={index}
-                className={`rounded-xl shadow-lg overflow-hidden transition-all duration-300 
-                hover:shadow-xl hover:-translate-y-1 cursor-pointer 
-                ${darkMode ? "bg-gray-700" : "bg-white"}`}
-              >
-                {/* Card Header */}
-                <div className="relative">
-                  {/* Image Container */}
-                  <div className="w-full h-48 overflow-hidden">
-                    <img
-                      src={
-                        module.image || "https://via.placeholder.com/400x300"
-                      }
-                      alt={module.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-                    />
-                  </div>
-
-                  {/* Badge Overlay */}
-                  <div className="absolute top-4 right-4">
-                    <span
-                      className={`px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm ${
-                        module.completed
-                          ? "bg-green-500 bg-opacity-90 text-white"
-                          : "bg-blue-500 bg-opacity-90 text-white"
-                      }`}
-                    >
-                      {module.completed ? "Completed" : "In Progress"}
-                    </span>
-                  </div>
-
-                  {/* Icon Overlay */}
-                  <div className="absolute bottom-4 left-4">
-                    <div
-                      className={`p-3 rounded-lg backdrop-blur-sm ${
-                        darkMode
-                          ? "bg-gray-800 bg-opacity-20"
-                          : "bg-gray-300 bg-opacity-20"
-                      }`}
-                    >
-                      {module.completed ? (
-                        <Book
-                          size={24}
-                          className={`${
-                            darkMode ? "text-gray-300" : "text-gray-800"
-                          }`}
-                        />
-                      ) : (
-                        <Play
-                          size={24}
-                          className={`${
-                            darkMode ? "text-gray-300" : "text-gray-800"
-                          }`}
-                        />
-                      )}
-                    </div>
-                  </div>
+              {/* Card Header */}
+              <div className="relative">
+                {/* Image Container */}
+                <div className="w-full h-48 overflow-hidden">
+                  <img
+                    src={module.image || "https://via.placeholder.com/400x300"}
+                    alt={module.title}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                  />
                 </div>
 
-                {/* Card Body */}
-                <div className="p-6">
-                  <h3
-                    className={`text-lg font-semibold mb-3 ${
-                      darkMode ? "text-gray-100" : "text-gray-800"
+                {/* Badge Overlay */}
+                <div className="absolute top-4 right-4">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm ${
+                      module.completed
+                        ? "bg-green-500 bg-opacity-90 text-white"
+                        : "bg-blue-500 bg-opacity-90 text-white"
                     }`}
                   >
-                    {module.title}
-                  </h3>
+                    {module.completed ? "Completed" : "In Progress"}
+                  </span>
+                </div>
 
-                  <div className="space-y-2">
-                    <div
-                      className={`flex items-center text-sm ${
-                        darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      <Clock size={16} className="mr-2" />
-                      <span>{module.duration}</span>
-                    </div>
-                    <div
-                      className={`flex items-center text-sm ${
-                        darkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
-                    >
-                      <Book size={16} className="mr-2" />
-                      <span>{module.lessons} lessons</span>
-                    </div>
-                  </div>
-
-                  {/* Progress Bar */}
-                  {module.progress !== undefined && (
-                    <div
-                      className={`mt-4 pt-4 border-t ${
-                        darkMode ? "border-gray-600" : "border-gray-200"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between text-sm">
-                        {module.progress < 100 ? (
-                          <span
-                            className={`font-medium ${
-                              darkMode ? "text-blue-400" : "text-blue-600"
-                            }`}
-                          >
-                            {module.progress}% Complete
-                          </span>
-                        ) : (
-                          <span
-                            className={`font-medium ${
-                              darkMode ? "text-green-400" : "text-green-600"
-                            }`}
-                          >
-                            Completed
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Progress bar visual */}
-                      <div
-                        className={`w-full rounded-full h-2 mt-2 ${
-                          darkMode ? "bg-gray-600" : "bg-gray-300"
+                {/* Icon Overlay */}
+                <div className="absolute bottom-4 left-4">
+                  <div
+                    className={`p-3 rounded-lg backdrop-blur-sm ${
+                      darkMode
+                        ? "bg-gray-800 bg-opacity-20"
+                        : "bg-gray-300 bg-opacity-20"
+                    }`}
+                  >
+                    {module.completed ? (
+                      <Book
+                        size={24}
+                        className={`${
+                          darkMode ? "text-gray-300" : "text-gray-800"
                         }`}
-                      >
-                        <div
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            module.progress === 100
-                              ? "bg-green-500"
-                              : "bg-blue-500"
-                          }`}
-                          style={{ width: `${module.progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
+                      />
+                    ) : (
+                      <Play
+                        size={24}
+                        className={`${
+                          darkMode ? "text-gray-300" : "text-gray-800"
+                        }`}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </button>
+
+              {/* Card Body */}
+              <div className="p-6">
+                <h3
+                  className={`text-lg font-semibold mb-3 ${
+                    darkMode ? "text-gray-100" : "text-gray-800"
+                  }`}
+                >
+                  {module.title}
+                </h3>
+
+                <div className="space-y-2">
+                  <div
+                    className={`flex items-center text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    <Clock size={16} className="mr-2" />
+                    <span>{module.duration}</span>
+                  </div>
+                  <div
+                    className={`flex items-center text-sm ${
+                      darkMode ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
+                    <Book size={16} className="mr-2" />
+                    <span>{module.lessons} lessons</span>
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                {module.progress !== undefined && (
+                  <div
+                    className={`mt-4 pt-4 border-t ${
+                      darkMode ? "border-gray-600" : "border-gray-200"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between text-sm">
+                      {module.progress < 100 ? (
+                        <span
+                          className={`font-medium ${
+                            darkMode ? "text-blue-400" : "text-blue-600"
+                          }`}
+                        >
+                          {module.progress}% Complete
+                        </span>
+                      ) : (
+                        <span
+                          className={`font-medium ${
+                            darkMode ? "text-green-400" : "text-green-600"
+                          }`}
+                        >
+                          Completed
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Progress bar visual */}
+                    <div
+                      className={`w-full rounded-full h-2 mt-2 ${
+                        darkMode ? "bg-gray-600" : "bg-gray-300"
+                      }`}
+                    >
+                      <div
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          module.progress === 100
+                            ? "bg-green-500"
+                            : "bg-blue-500"
+                        }`}
+                        style={{ width: `${module.progress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
         </div>
       </div>
