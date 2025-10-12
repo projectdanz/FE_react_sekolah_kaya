@@ -13,7 +13,6 @@ const Sidebar = ({
   const menuItems = [
     { id: "home", label: "Home", icon: Home },
     { id: "course", label: "Course", icon: Book },
-    { id: "video", label: "Video", icon: Video },
     { id: "settings", label: "Settings", icon: Settings },
   ];
   
