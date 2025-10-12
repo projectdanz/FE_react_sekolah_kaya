@@ -7,6 +7,7 @@ import Course from "../components/Course";
 import Settings from "../components/Settings";
 import { useTheme } from "../context/ThemeContext";
 import { themeConfig } from "../config/theme";
+import WaFloating from "../components/WaFloating";
 
 const Dashboard = () => {
   const { darkMode, toggleTheme } = useTheme();
@@ -16,41 +17,6 @@ const Dashboard = () => {
   const [activeMenu, setActiveMenu] = useState("course");
   const [showAlert, setShowAlert] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const courses = [
-    {
-      id: 1,
-      title: "Belajar MERN Stack",
-      progress: 18,
-      image:
-        "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400&h=300&fit=crop",
-    },
-    {
-      id: 2,
-      title: "React Native Mobile Development",
-      progress: 100,
-      image:
-        "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400&h=300&fit=crop",
-    },
-    {
-      id: 3,
-      title: "Financial Freedom Mastery",
-      progress: 67,
-      image:
-        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop",
-    },
-    {
-      id: 4,
-      title: "Digital Marketing Strategy",
-      progress: 32,
-      image:
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-    },
-  ];
-
-  const filteredCourses = courses.filter((course) =>
-    course.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
   const renderContent = () => {
     switch (activeMenu) {
@@ -118,9 +84,9 @@ const Dashboard = () => {
                   }`}
                 >
                   {darkMode ? (
-                    <Sun size={20} className="text-yellow-500" />
+                    <Moon size={20} className="text-yellow-500" />
                   ) : (
-                    <Moon size={20} className="text-blue-900" />
+                    <Sun size={20} className="text-blue-900" />
                   )}
                 </button>
                 <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg transition-shadow" />
@@ -132,6 +98,8 @@ const Dashboard = () => {
           <main className="flex-1 overflow-y-auto p-6">
             {showAlert && <Alert onClose={() => setShowAlert(false)} />}
             {renderContent()}
+            
+            <WaFloating phone="6281914430274" message="Halo%20saya%20mau%20cek%20order"/>
           </main>
         </div>
       </div>
