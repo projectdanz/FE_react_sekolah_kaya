@@ -1,3 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+:root {
+  --background-light: #f3f4f6;
+  --background-dark: #111827;
+  --text-light: #111827;
+  --text-dark: #f3f4f6;
+}
+
+.dark {
+  --background: var(--background-dark);
+  --text: var(--text-dark);
+}
+
+body {
+  @apply transition-colors duration-200;
+}
